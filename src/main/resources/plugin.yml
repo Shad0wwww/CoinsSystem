@@ -1,0 +1,12 @@
+name: Coins
+version: '${project.version}'
+main: dk.shadow.coins.Coins
+api-version: 1.8
+authors: [ Shad0wsense ]
+description: test
+commands:
+  coins:
+      description: Coins command
+      aliases:
+        - coin
+        - coinsystem

@@ -1,0 +1,30 @@
+prefix: "&8&l[ &e&LCOINS &8&l]"
+
+messages:
+    reload_no_permissions: "%prefix% &fDu har ikke adgang."
+    reload_starting: "%prefix% &aReload er begyndt"
+    reload_error: "%prefix% &cDer opstod en fejl"
+    reload_succes: "%prefix% &asuccelsful reloaded"
+    only_player_command: "%prefix% &fDet er kun spillere der kan bruge commanden."
+
+    #BALANCE
+    #%amount% er hvor mange coins du har
+    #%player% er spilleren
+
+    coins_balance_dig_selv:
+        - "%prefix%"
+        - "&8▍ &fDu har &a%amount% &ecoins&f."
+    coins_balance_en_anden:
+        - "%prefix%"
+        - "&8▍ &c%player% &fhar &a%amount% &ecoins&f."
+
+    #COINS ADD - ADMIN
+    #%amount% Hvor mange coins du sendte
+    #%player% Spilleren du sendte det til
+
+    coins_add_en_anden:
+        - "%prefix%"
+        - "&8▍ &fDu sendte &a%amount% &ecoins&f til &c%player%"
+    coins_add_modtog:
+        - "%prefix%"
+        - "&8▍ &fDu modtog &a%amount% &ecoins&f."
