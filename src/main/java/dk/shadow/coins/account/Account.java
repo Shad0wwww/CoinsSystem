@@ -25,4 +25,7 @@ public class Account {
     public void addAmount(double amount) {
         this.amount += amount;
     }
+    public void removeAmount(double amount) {
+        this.amount -= amount;
+    }
 }

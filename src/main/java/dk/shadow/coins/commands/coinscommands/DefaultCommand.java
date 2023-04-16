@@ -27,7 +27,11 @@ public class DefaultCommand extends ISubCommand {
             player.sendMessage(ColorUtils.getColored("&8▌ &7/coins pay <spiller> <antal>"));
             if (player.hasPermission("coins.admin")) {
                 player.sendMessage(ColorUtils.getColored("&8▌ &7/coins reload"));
+                player.sendMessage(ColorUtils.getColored("&8▌ &7/coins bal <spiller>"));
                 player.sendMessage(ColorUtils.getColored("&8▌ &7/coins add <spiller> <antal>"));
+                player.sendMessage(ColorUtils.getColored("&8▌ &7/coins remove <spiller> <antal>"));
+                player.sendMessage(ColorUtils.getColored("&8▌ &7/coins set <spiller> <antal>"));
+                player.sendMessage(ColorUtils.getColored("&8▌ &7/coins gui"));
             }
         }
 

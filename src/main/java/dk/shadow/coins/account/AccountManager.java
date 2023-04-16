@@ -23,6 +23,26 @@ public class AccountManager {
         }
     }
 
+    public void removeCoins(UUID uuid, double amount){
+        if (this.accounts.containsKey(uuid)) {
+            Account account = this.accounts.get(uuid);
+            account.removeAmount(amount);
+        } else {
+            Account newAccount = new Account(uuid, amount);
+            this.accounts.put(uuid, newAccount);
+        }
+    }
+
+    public void setCoins(UUID uuid, double amount) {
+        if (this.accounts.containsKey(uuid)) {
+            Account account = this.accounts.get(uuid);
+            account.setAmount(amount);
+        } else {
+            Account newAccount = new Account(uuid, amount);
+            this.accounts.put(uuid, newAccount);
+        }
+    }
+
     public void payCoins(UUID uuid, double amount, UUID uuid2, double amount2){
 
     }
@@ -40,18 +60,13 @@ public class AccountManager {
         try (Statement statement = connection.createStatement()) {
             ResultSet result = statement.executeQuery(selectSql);
 
-            System.out.println("result - " + result);
-            System.out.println("statement - " + statement);
-
             if (!result.isBeforeFirst()) {
                 System.out.println("Result set is empty");
             }
 
             while (result.next()) {
                 UUID uuid = UUID.fromString(result.getString("player_uuid"));
-                System.out.println("uuid ----------------- " + uuid);
                 double coins = result.getLong("player_coins");
-                System.out.println("coins ----------------- " + coins);
                 this.addCoins(uuid, coins);
             }
         }

@@ -1,4 +1,4 @@
-package dk.shadow.coins.listener;
+package dk.shadow.coins.listener.bukkit;
 
 import dk.shadow.coins.Coins;
 import dk.shadow.coins.account.AccountManager;
@@ -9,7 +9,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import java.sql.SQLException;
 
 public class OnJoin implements Listener {
-    private AccountManager accountManager;
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
