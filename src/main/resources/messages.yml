@@ -29,3 +29,14 @@ messages:
     coins_add_modtog:
         - "%prefix%"
         - "&8▍ &fDu modtog &a%amount% &ecoins&f."
+
+    coins_remove_en_anden:
+        - "%prefix%"
+        - "&8▍ &fDu fjernede &a%amount% &ecoins&f fra &c%player%"
+    coins_remove:
+        - "%prefix%"
+        - "&8▍ &fDu fik fjernet &a%amount% &ecoins&f."
+
+    coins_set:
+        - "%prefix%"
+        - "&8▍ &fDu satte &c%player% &ecoins&f til &a%amount%&f."

@@ -38,16 +38,13 @@ public class AddCommand extends ISubCommand {
             }
 
             double amount = Double.parseDouble(args[1]);
-
             if (!(amount > 0)) {
                 sender.sendMessage(ColorUtils.getColored("&8▌ &7Du kan &cikke &7sende negative &eCoins &7til andre."));
                 return;
             }
 
             Messages.send(sender, "messages.coins_add_en_anden", "%amount%", String.valueOf(amount), "%player%", arg_0_player.getDisplayName());
-
             Messages.send(arg_0_player, "coins_add_modtog", "%amount%", String.valueOf(amount));
-
             Coins.getAccountManager().addCoins(arg_0, amount);
 
             CoinsAddEvent coinsAddEvent = new CoinsAddEvent(arg_0_player, amount);

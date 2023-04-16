@@ -13,6 +13,7 @@ public class AccountManager {
     public AccountManager(Connection connection) {
         this.connection = connection;
     }
+
     public void addCoins(UUID uuid, double amount){
         if (this.accounts.containsKey(uuid)) {
             Account account = this.accounts.get(uuid);
