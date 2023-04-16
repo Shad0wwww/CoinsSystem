@@ -14,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class CoinsCommands extends ICommand {
 
+    //TODO: Removecommand, paycommand, gui with all players bal where u also can remove and add coins, setcommand.
     public CoinsCommands(JavaPlugin plugin, String command) {
         super(plugin, command);
 

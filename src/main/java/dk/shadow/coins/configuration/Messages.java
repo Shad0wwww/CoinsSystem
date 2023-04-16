@@ -3,6 +3,7 @@ package dk.shadow.coins.configuration;
 import dk.shadow.coins.utils.ColorUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -44,10 +45,18 @@ public class Messages {
             return messages.get(path);
         return new String[] { "" };
     }
-
-
-
+    //send the message with the path, and it can replace all the thing in the message
     public static void send(CommandSender player, String path, String... replacements) {
+        String[] messages = get(path);
+        for (String message : messages) {
+            for (int i = 0; i < replacements.length; i += 2) {
+                message = message.replaceAll(replacements[i], replacements[i+1]);
+            }
+            player.sendMessage(message);
+        }
+    }
+
+    public static void send(Player player, String path, String... replacements) {
         String[] messages = get(path);
         for (String message : messages) {
             for (int i = 0; i < replacements.length; i += 2) {

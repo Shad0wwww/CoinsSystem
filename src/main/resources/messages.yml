@@ -18,6 +18,7 @@ messages:
         - "%prefix%"
         - "&8▍ &c%player% &fhar &a%amount% &ecoins&f."
 
+
     #COINS ADD - ADMIN
     #%amount% Hvor mange coins du sendte
     #%player% Spilleren du sendte det til

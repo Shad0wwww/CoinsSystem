@@ -1,10 +1,9 @@
-package dk.shadow.coins.listener.events;
+package dk.shadow.coins.events;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class CoinsAddEvent extends Event {
+public class CoinsAddEvent extends CallableEvent {
 
     protected Player player;
     protected Double d;
@@ -13,11 +12,6 @@ public class CoinsAddEvent extends Event {
         this.d = d;
         this.player = player;
 
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return null;
     }
 
     public Player getPlayer() {

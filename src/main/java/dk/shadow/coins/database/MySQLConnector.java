@@ -17,7 +17,7 @@ public class MySQLConnector {
         connection = DriverManager.getConnection("jdbc:mysql://" + host+ ":" + port + "/" + database, username, password);
     }
 
-
+    //Function to create a table in mysql
     public void createTable() throws SQLException {
         String sql = "CREATE TABLE IF NOT EXISTS users ("
                 + "id INT NOT NULL AUTO_INCREMENT,"
@@ -29,6 +29,7 @@ public class MySQLConnector {
             statement.executeUpdate();
         }
     }
+    //Function to delete tables and the boolean to turn of and on
     public void deleteTable(boolean b) throws SQLException {
         if (b) {
             try (PreparedStatement statement = connection.prepareStatement("DROP TABLE IF EXISTS users")) {

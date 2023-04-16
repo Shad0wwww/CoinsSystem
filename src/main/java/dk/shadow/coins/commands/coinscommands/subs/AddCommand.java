@@ -3,7 +3,7 @@ package dk.shadow.coins.commands.coinscommands.subs;
 import dk.shadow.coins.Coins;
 import dk.shadow.coins.commands.ISubCommand;
 import dk.shadow.coins.configuration.Messages;
-import dk.shadow.coins.listener.events.CoinsAddEvent;
+import dk.shadow.coins.events.CoinsAddEvent;
 import dk.shadow.coins.utils.ColorUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -29,13 +29,22 @@ public class AddCommand extends ISubCommand {
         if(args.length == 2) {
 
             UUID arg_0 = Bukkit.getOfflinePlayer(args[0]).getUniqueId();
+            Player arg_0_player = Bukkit.getPlayer(args[0]);
             double amount = Double.parseDouble(args[1]);
-            Messages.send(sender, "messages.coins_add_en_anden", "%prefix%", String.valueOf(Messages.get("prefix")), "%amount%", String.valueOf(amount), "%player%", Bukkit.getPlayer(arg_0).getDisplayName());
-            Messages.send(Bukkit.getOfflinePlayer(arg_0).getPlayer(), "coins_add_modtog", "%prefix%", String.valueOf(Messages.get("prefix")), "%amount%", String.valueOf(amount));
+
+            if (!(amount > 0)) {
+                sender.sendMessage(ColorUtils.getColored("&8▌ &7Du kan &cikke &7sende negative &eCoins &7til andre."));
+                return;
+            }
+
+            Messages.send(sender, "messages.coins_add_en_anden", "%amount%", String.valueOf(amount), "%player%", arg_0_player.getDisplayName());
+
+            Messages.send(arg_0_player, "coins_add_modtog", "%amount%", String.valueOf(amount));
 
             Coins.getAccountManager().addCoins(arg_0, amount);
-            Bukkit.getServer().getPluginManager().callEvent(new CoinsAddEvent(Bukkit.getOfflinePlayer(arg_0).getPlayer(), amount));
-            return;
+
+            CoinsAddEvent coinsAddEvent = new CoinsAddEvent(arg_0_player, amount);
+            coinsAddEvent.call();
 
         } else {
             sender.sendMessage(ColorUtils.getColored("&8▌ &7/coins add <spiller> <antal>"));
