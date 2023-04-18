@@ -15,7 +15,7 @@ public class Messages {
     public static void initialise(JavaPlugin plugin) {
         File file = new File(plugin.getDataFolder(), "messages.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        messages = (HashMap)new HashMap<>();
+        messages = new HashMap<>();
         for (String key : config.getConfigurationSection("").getKeys(true)) {
             if (config.isConfigurationSection(key))
                 continue;
@@ -31,8 +31,8 @@ public class Messages {
         }
         if (messages.containsKey("prefix"))
             for (Map.Entry<String, String[]> entry : messages.entrySet()) {
-                for (int i = 0; i < ((String[])entry.getValue()).length; i++)
-                    ((String[])entry.getValue())[i] = ((String[])entry.getValue())[i].replaceAll("%prefix%", ((String[])messages.get("prefix"))[0]);
+                for (int i = 0; i < entry.getValue().length; i++)
+                    entry.getValue()[i] = ((String[])entry.getValue())[i].replaceAll("%prefix%", ((String[])messages.get("prefix"))[0]);
             }
 
     }
@@ -40,20 +40,27 @@ public class Messages {
     public static String[] get(String path) {
         if (messages.containsKey(path))
             return messages.get(path);
+        System.out.println("messages.containsKey is null - 43");
         return new String[] { "" };
     }
 
     public static String[] get(String path, String... replacements) {
         if (messages.containsKey(path)) {
             String[] messages = get(path);
+            System.out.println("messages _> " + Arrays.toString(messages));
+
             List<String> messageList = new ArrayList<>();
             for (String message : messages) {
+
                 for (int i = 0; i < replacements.length; i += 2)
-                    message = message.replaceAll(replacements[i], ColorUtils.getColored(replacements[i + 1]));
+                    message = message.replaceAll(replacements[i], replacements[i +1]);
+
+                System.out.println("message -> " + message);
                 messageList.add(message);
             }
-            return messageList.<String>toArray(new String[0]);
+            return messageList.toArray(new String[0]);
         }
+        System.out.println("messages.containsKey is null - 58");
         return new String[] { "" };
     }
 

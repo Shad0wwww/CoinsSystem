@@ -1,10 +1,13 @@
 package dk.shadow.coins.utils;
 
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 
 import java.util.List;
 
 public class ColorUtils {
+    public static String plain(String s) {
+        return s.replaceAll("§", "&");
+    }
     public static String[] getColored(String... stringList) {
         if (stringList == null)
             return null;

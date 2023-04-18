@@ -42,13 +42,18 @@ messages:
         - "&8▍ &fDu satte &c%player% &ecoins&f til &a%amount%&f."
 
 gui:
-    title: "&8&l[ &e&lCOINS &7- &c&lADMIN &8&l] "
+    title: "&8&l[ &e&lCOINS &7- &c&lADMIN &8&l]"
     rows: 6
+    top-row: "&e"
+    bottom-row: "&f"
     arrow-left: "http://textures.minecraft.net/texture/b76230a0ac52af11e4bc84009c6890a4029472f3947b4f465b5b5722881aacc7"
     arrow-right: "http://textures.minecraft.net/texture/dbf8b6277cd36266283cb5a9e6943953c783e6ff7d6a2d59d15ad0697e91d43c"
     middle: "http://textures.minecraft.net/texture/e825419e429afc040c9e68b10523b917d7b8087d63e7648b10807da8b768ee"
-
-    spiller_head_name: "%player%"
+    spiller_head_name: "&c&l%player%"
     spiller_lore:
-        - "&fDin bal er på %balance%"
+        - "&7"
+        - "%prefix%"
+        - "&7"
+        - "&8▍ &fSpillers bal er på %balance%"
+        - "&7"
 

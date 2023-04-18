@@ -41,7 +41,6 @@ public final class Coins extends JavaPlugin {
             throw new RuntimeException(e);
         }
         RegisterListener.registerListeners(this);
-
         CommandManager.initialise(this);
         reload();
         GuiManager.initialise();
@@ -79,6 +78,7 @@ public final class Coins extends JavaPlugin {
         File messages = new File(getDataFolder(), "messages.yml");
         if (!messages.exists())
             saveResource("messages.yml", false);
+
         Messages.initialise(this);
     }
 

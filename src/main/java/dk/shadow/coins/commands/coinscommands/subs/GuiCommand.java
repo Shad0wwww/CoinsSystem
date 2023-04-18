@@ -15,8 +15,14 @@ public class GuiCommand extends ISubCommand {
         super("gui");
     }
 
+
+
     @Override
     public void onCommand(CommandSender sender, String[] args, String paramString) {
+        if (!sender.hasPermission("coins.reload")) {
+            Messages.send(sender, "messages.reload_no_permissions");
+            return;
+        }
         GuiManager.openMenu((Player) sender, "coins");
     }
 }

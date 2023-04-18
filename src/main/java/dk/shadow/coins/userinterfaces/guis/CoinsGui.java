@@ -3,18 +3,21 @@ package dk.shadow.coins.userinterfaces.guis;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
+import dev.triumphteam.gui.guis.PaginatedGui;
 import dk.shadow.coins.Coins;
 import dk.shadow.coins.account.Account;
 import dk.shadow.coins.configuration.Messages;
 import dk.shadow.coins.userinterfaces.SubGui;
 import dk.shadow.coins.utils.ColorUtils;
 import dk.shadow.coins.utils.GUI;
+import dk.shadow.coins.utils.GlassColor;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -28,60 +31,97 @@ public class CoinsGui implements SubGui {
 
         int rows = Integer.parseInt(Messages.get("gui.rows")[0]);
         String title = Messages.get("gui.title")[0];
+
         ItemStack arrow_left = GUI.getSkull(Messages.get("gui.arrow-left")[0]);
         ItemStack middle = GUI.getSkull(Messages.get("gui.middle")[0]);
+        ItemStack arrow_right = GUI.getSkull(Messages.get("gui.arrow-right")[0]);
 
-        int size = !Coins.getAccountManager().getBalances().isEmpty() ? Coins.getAccountManager().getBalances().size() : 0;
-        int page = 0;
-        int n = 0;
-        int page_start = 45*page;
-        int n2 = 1;
+        String top_row = Messages.get("gui.top-row")[0];
+        String bottom_row = Messages.get("gui.bottom-row")[0];
+
+        GuiItem top_row_item = ItemBuilder.from(GUI.createItemGlass(Material.STAINED_GLASS_PANE, GlassColor.getGlassColor(ColorUtils.plain(top_row)), "&f")).name(Component.text(ColorUtils.getColored("&7"))).asGuiItem();
+        GuiItem bottom_row_item = ItemBuilder.from(GUI.createItemGlass(Material.STAINED_GLASS_PANE, GlassColor.getGlassColor(ColorUtils.plain(bottom_row)), "&f")).name(Component.text(ColorUtils.getColored("&7"))).asGuiItem();
 
 
-        Gui gui = Gui.gui().title(Component.text(title)).rows(rows).disableAllInteractions().create();
+        PaginatedGui gui = Gui.paginated()
+                .title(Component.text(title))
+                .rows(rows)
+                .disableAllInteractions()
+                .pageSize(37)
+                .create();
 
+
+
+        int n = 8;
         for (Map.Entry<UUID, Account> entry : Coins.getAccountManager().getBalances().entrySet()) {
             UUID p_uuid = entry.getKey();
             NumberFormat formatter = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.GERMANY));
             String string_amount = formatter.format(entry.getValue().getAmount());
             OfflinePlayer p = Bukkit.getOfflinePlayer(p_uuid);
             String playerName = p.getName();
+
             String title_head = Messages.get("gui.spiller_head_name", "%player%", playerName)[0];
             String[] lore = Messages.get("gui.spiller_lore", "%balance%", string_amount, "%player%", playerName);
 
 
+            ItemStack head = GUI.getPlayerSkull(playerName);
 
-            n2++;
+            GuiItem player_heads = ItemBuilder.from(head).name(Component.text(ColorUtils.getColored(title_head))).setLore(ColorUtils.getColored(lore)).asGuiItem(event -> {
+                Player clicked_player = (Player) event.getWhoClicked();
+                if (event.getCurrentItem() == null) return;
 
-            if (n2 >= page_start) {
+                ItemStack clickedItem = event.getCurrentItem();
 
-                ItemStack head = GUI.getPlayerSkull(playerName);
+                // Check if the clicked item is a skull
+                if (clickedItem.getType() == Material.SKULL || clickedItem.getType() == Material.SKULL_ITEM) {
+                    SkullMeta skullMeta = (SkullMeta) clickedItem.getItemMeta();
+                    // Check if the skull has an owner
+                    if (skullMeta.hasOwner()) {
+                        String owner = skullMeta.getOwner();
+                        // Do something with the owner's name
+                        Bukkit.broadcastMessage(owner);
 
-                GuiItem player_heads = ((ItemBuilder)((ItemBuilder)ItemBuilder.from(head)
-                        .name((Component)Component.text(ColorUtils.getColored(title_head))))
-                        .setLore(ColorUtils.getColored(lore))).asGuiItem();
 
-                gui.setItem(n, player_heads);
-
-                n++;
-
-                if (n >= 45) {
-                    break;
+                    }
                 }
 
-            }
+
+            });
+            n++;
+            gui.setItem(n, player_heads);
 
         }
 
-        int math = Math.round((float) size / (9 * rows));
-        GuiItem middle_gui = ((ItemBuilder)((ItemBuilder)ItemBuilder.from(middle)
-                .name((Component)Component.text(ColorUtils.getColored("&f&lSide"))))
-                .setLore(ColorUtils.getColored("&fSide: &70/" + math)))
+
+        GuiItem arrow_left_gui = ItemBuilder.from(arrow_left)
+                .name(Component.text(ColorUtils.getColored("&f&lNæste Side")))
+                .setLore(ColorUtils.getColored("&7" + gui.getNextPageNum()))
+
+                .asGuiItem(event -> {
+                    gui.next();
+                });
+
+        GuiItem middle_gui = ItemBuilder.from(middle)
+                .name(Component.text(ColorUtils.getColored("&f&lSide")))
+                .setLore(ColorUtils.getColored("&fSide: &70/" + gui.getPagesNum()))
                 .asGuiItem();
 
-        gui.setItem(49, middle_gui);
+        GuiItem arrow_right_gui = ItemBuilder.from(arrow_right)
+                .name(Component.text(ColorUtils.getColored("&f&lForrige Side")))
+                .setLore(ColorUtils.getColored("&7" + gui.getPrevPageNum()))
+                .asGuiItem(event -> {
+                    gui.previous();
+                });
 
-        gui.open((HumanEntity) player);
+        for (int i = 0; i < 9; i++) {
+           gui.setItem(i, top_row_item);
+        }
+
+        gui.setItem(49, middle_gui);
+        gui.setItem(48, arrow_left_gui);
+        gui.setItem(50, arrow_right_gui);
+
+        gui.open(player);
 
     }
 }
