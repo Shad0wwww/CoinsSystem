@@ -8,11 +8,14 @@ import dk.shadow.coins.listener.RegisterListener;
 import dk.shadow.coins.task.SaveCoins;
 import dk.shadow.coins.userinterfaces.GuiManager;
 import dk.shadow.coins.utils.ColorUtils;
+import dk.shadow.coins.websocket.WebsocketHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -22,6 +25,11 @@ public final class Coins extends JavaPlugin {
     private static ConsoleCommandSender log;
 
     private static AccountManager accountManager;
+    public static String MysqlStatus;
+    public WebsocketHandler websocketHandler;
+
+    public static String websocketURL = "ws://83.92.176.64:8080";
+
     @Override
     public void onEnable() {
         instance = this;
@@ -33,13 +41,16 @@ public final class Coins extends JavaPlugin {
             accountManager = new AccountManager(mySQLConnector.getConnection());
             accountManager.loadAllAccounts();
             if (mySQLConnector.getConnection().isValid(1)) {
-                log.sendMessage(ColorUtils.getColored(" &a&lCONNECTED TO DATABASE"));
+                log.sendMessage(ColorUtils.getColored("&a&lCONNECTED TO DATABASE"));
+                MysqlStatus = "&a&lCONNECTED TO DATABASE";
             } else {
-                log.sendMessage(ColorUtils.getColored(" &c&lFAILED TO CONNECT TO DATABASE"));
+                log.sendMessage(ColorUtils.getColored("&c&lFAILED TO CONNECT TO DATABASE"));
+                MysqlStatus = "&c&lFAILED TO CONNECT TO DATABASE";
             }
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
         RegisterListener.registerListeners(this);
         CommandManager.initialise(this);
         reload();
@@ -67,7 +78,15 @@ public final class Coins extends JavaPlugin {
         return mySQLConnector;
     }
 
-
+    public void connectSocket() {
+        try {
+            System.out.println("websocketHandler" + websocketHandler);
+            websocketHandler = new WebsocketHandler(new URI(websocketURL));
+            websocketHandler.connect();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void reload() {
         initialiseConfigs();

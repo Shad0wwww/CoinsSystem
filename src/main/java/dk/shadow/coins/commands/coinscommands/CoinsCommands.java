@@ -18,7 +18,8 @@ public class CoinsCommands extends ICommand {
 
         setDefaultCommand(new DefaultCommand());
         addSubCommands(
-                new ReloadCommand(), new BalCommand(), new AddCommand(), new SetCommand(), new RemoveCommand(), new GuiCommand());
+                new ReloadCommand(), new BalCommand(), new AddCommand(), new SetCommand(), new RemoveCommand(), new GuiCommand(), new StatusCommand()
+        );
 
     }
 

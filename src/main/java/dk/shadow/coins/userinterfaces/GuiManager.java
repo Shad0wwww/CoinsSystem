@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 public class GuiManager {
+    //TODO: Auto update inv, admin menu to give money, reset and remove coins and it should open an anvil gui where u can type the integers
     public static HashMap<String, SubGui> guis = new HashMap<>();
     public static void openMenu(Player player, String name) {
         if (guis.containsKey(name))
@@ -16,7 +17,7 @@ public class GuiManager {
     }
     public static void initialise() {
         guis.clear();
-        addGui("coins", (SubGui)new CoinsGui());
+        addGui("coins", new CoinsGui());
 
     }
 }
