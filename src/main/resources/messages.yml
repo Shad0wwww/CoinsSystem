@@ -40,3 +40,7 @@ messages:
     coins_set:
         - "%prefix%"
         - "&8▍ &fDu satte &c%player% &ecoins&f til &a%amount%&f."
+
+gui:
+    title: "&8&l[ &e&lCOINS &7- &c&lADMIN &8&l] "
+    rows: 5

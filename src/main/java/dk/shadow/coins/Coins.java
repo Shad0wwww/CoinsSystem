@@ -5,6 +5,8 @@ import dk.shadow.coins.commands.CommandManager;
 import dk.shadow.coins.configuration.Messages;
 import dk.shadow.coins.database.MySQLConnector;
 import dk.shadow.coins.listener.RegisterListener;
+import dk.shadow.coins.task.SaveCoins;
+import dk.shadow.coins.userinterfaces.GuiManager;
 import dk.shadow.coins.utils.ColorUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
@@ -42,6 +44,8 @@ public final class Coins extends JavaPlugin {
 
         CommandManager.initialise(this);
         reload();
+        GuiManager.initialise();
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new SaveCoins(), 12000, 12000);
     }
 
     @Override
