@@ -1,4 +1,4 @@
-package dk.shadow.coins.events;
+package dk.shadow.coins.listener.events;
 
 import org.bukkit.event.Cancellable;
 

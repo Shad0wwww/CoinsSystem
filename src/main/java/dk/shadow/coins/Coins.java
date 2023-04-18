@@ -12,6 +12,7 @@ import dk.shadow.coins.websocket.WebsocketHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.java_websocket.enums.ReadyState;
 
 import java.io.File;
 import java.net.URI;
@@ -26,6 +27,7 @@ public final class Coins extends JavaPlugin {
 
     private static AccountManager accountManager;
     public static String MysqlStatus;
+    public static String websocketHandlerStatus;
     public WebsocketHandler websocketHandler;
 
     public static String websocketURL = "ws://83.92.176.64:8080";
@@ -68,6 +70,7 @@ public final class Coins extends JavaPlugin {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        websocketHandler.close();
     }
 
     public static Coins getInstance() {
@@ -80,9 +83,17 @@ public final class Coins extends JavaPlugin {
 
     public void connectSocket() {
         try {
-            System.out.println("websocketHandler" + websocketHandler);
+            System.out.println("websocketHandler" );
             websocketHandler = new WebsocketHandler(new URI(websocketURL));
             websocketHandler.connect();
+
+            if (websocketHandler.getReadyState() == ReadyState.OPEN) {
+                log.sendMessage(ColorUtils.getColored("&a&lCONNECTED TO WEBSOCKET"));
+                websocketHandlerStatus = "&a&lCONNECTED TO WEBSOCKET";
+            } else {
+                log.sendMessage(ColorUtils.getColored("&c&lFAILED TO CONNECT TO WEBSOCKET"));
+                websocketHandlerStatus = "&c&lFAILED TO CONNECT TO WEBSOCKET";
+            }
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

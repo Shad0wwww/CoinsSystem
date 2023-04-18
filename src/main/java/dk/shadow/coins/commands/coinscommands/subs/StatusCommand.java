@@ -25,6 +25,15 @@ public class StatusCommand extends ISubCommand {
         }
         sender.sendMessage(ColorUtils.getColored(Messages.get("prefix")));
         sender.sendMessage(ColorUtils.getColored(Coins.MysqlStatus));
+        try {
+            sender.sendMessage(ColorUtils.getColored(Coins.websocketHandlerStatus));
+
+        } catch (Exception e) {
+            sender.sendMessage(ColorUtils.getColored("&c&lFAILED TO CONNECT TO WEBSOCKET"));
+            System.out.println(e.getCause());
+
+        }
+
     }
 }
 

@@ -3,7 +3,7 @@ package dk.shadow.coins.commands.coinscommands.subs;
 import dk.shadow.coins.Coins;
 import dk.shadow.coins.commands.ISubCommand;
 import dk.shadow.coins.configuration.Messages;
-import dk.shadow.coins.events.CoinsAddEvent;
+import dk.shadow.coins.listener.events.CoinsAddEvent;
 import dk.shadow.coins.utils.ColorUtils;
 import dk.shadow.coins.utils.IntUtil;
 import org.bukkit.Bukkit;

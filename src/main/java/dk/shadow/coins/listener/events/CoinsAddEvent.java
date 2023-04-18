@@ -1,7 +1,6 @@
-package dk.shadow.coins.events;
+package dk.shadow.coins.listener.events;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.HandlerList;
 
 public class CoinsAddEvent extends CallableEvent {
 
