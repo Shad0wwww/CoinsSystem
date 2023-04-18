@@ -28,6 +28,10 @@ public class CoinsGui implements SubGui {
 
         int rows = Integer.parseInt(Messages.get("gui.rows")[0]);
         String title = Messages.get("gui.title")[0];
+        ItemStack arrow_left = GUI.getSkull(Messages.get("gui.arrow-left")[0]);
+        ItemStack middle = GUI.getSkull(Messages.get("gui.middle")[0]);
+
+        int size = !Coins.getAccountManager().getBalances().isEmpty() ? Coins.getAccountManager().getBalances().size() : 0;
         int page = 0;
         int n = 0;
         int page_start = 45*page;
@@ -38,22 +42,26 @@ public class CoinsGui implements SubGui {
 
         for (Map.Entry<UUID, Account> entry : Coins.getAccountManager().getBalances().entrySet()) {
             UUID p_uuid = entry.getKey();
-            Bukkit.broadcastMessage("p_uuid - " + p_uuid);
             NumberFormat formatter = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.GERMANY));
             String string_amount = formatter.format(entry.getValue().getAmount());
+            OfflinePlayer p = Bukkit.getOfflinePlayer(p_uuid);
+            String playerName = p.getName();
+            String title_head = Messages.get("gui.spiller_head_name", "%player%", playerName)[0];
+            String[] lore = Messages.get("gui.spiller_lore", "%balance%", string_amount, "%player%", playerName);
+
+
 
             n2++;
 
             if (n2 >= page_start) {
-                OfflinePlayer p = Bukkit.getOfflinePlayer(p_uuid);
-                String playerName = p.getName();
+
                 ItemStack head = GUI.getPlayerSkull(playerName);
 
-                GuiItem item = ((ItemBuilder)((ItemBuilder)ItemBuilder.from(head)
-                        .name((Component)Component.text(ColorUtils.getColored("&c"+playerName))))
-                        .setLore(ColorUtils.getColored("&f", string_amount))).asGuiItem();
+                GuiItem player_heads = ((ItemBuilder)((ItemBuilder)ItemBuilder.from(head)
+                        .name((Component)Component.text(ColorUtils.getColored(title_head))))
+                        .setLore(ColorUtils.getColored(lore))).asGuiItem();
 
-                gui.setItem(n, item);
+                gui.setItem(n, player_heads);
 
                 n++;
 
@@ -64,6 +72,15 @@ public class CoinsGui implements SubGui {
             }
 
         }
+
+        int math = Math.round((float) size / (9 * rows));
+        GuiItem middle_gui = ((ItemBuilder)((ItemBuilder)ItemBuilder.from(middle)
+                .name((Component)Component.text(ColorUtils.getColored("&f&lSide"))))
+                .setLore(ColorUtils.getColored("&fSide: &70/" + math)))
+                .asGuiItem();
+
+        gui.setItem(49, middle_gui);
+
         gui.open((HumanEntity) player);
 
     }
