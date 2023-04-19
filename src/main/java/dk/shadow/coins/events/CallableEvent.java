@@ -1,4 +1,4 @@
-package dk.shadow.coins.listener.events;
+package dk.shadow.coins.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;

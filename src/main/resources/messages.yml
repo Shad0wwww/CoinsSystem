@@ -57,3 +57,8 @@ gui:
         - "&8▍ &fSpillers bal er på %balance%"
         - "&7"
 
+
+
+admin-gui:
+    title: "&8&l[ &e&lCOINS &8&l] &7- &c&l%player%"
+    rows: 3

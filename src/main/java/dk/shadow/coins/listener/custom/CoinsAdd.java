@@ -1,6 +1,6 @@
 package dk.shadow.coins.listener.custom;
 
-import dk.shadow.coins.listener.events.CoinsAddEvent;
+import dk.shadow.coins.events.CoinsAddEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -47,20 +47,14 @@ public class Messages {
     public static String[] get(String path, String... replacements) {
         if (messages.containsKey(path)) {
             String[] messages = get(path);
-            System.out.println("messages _> " + Arrays.toString(messages));
-
             List<String> messageList = new ArrayList<>();
             for (String message : messages) {
-
                 for (int i = 0; i < replacements.length; i += 2)
-                    message = message.replaceAll(replacements[i], replacements[i +1]);
-
-                System.out.println("message -> " + message);
+                    message = message.replaceAll(replacements[i], ColorUtils.getColored(replacements[i + 1]));
                 messageList.add(message);
             }
-            return messageList.toArray(new String[0]);
+            return messageList.<String>toArray(new String[0]);
         }
-        System.out.println("messages.containsKey is null - 58");
         return new String[] { "" };
     }
 

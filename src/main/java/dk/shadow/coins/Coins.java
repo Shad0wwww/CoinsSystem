@@ -18,13 +18,11 @@ import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public final class Coins extends JavaPlugin {
     private static Coins instance;
     private static MySQLConnector mySQLConnector;
     private static ConsoleCommandSender log;
-
     private static AccountManager accountManager;
     public static String MysqlStatus;
     public static String websocketHandlerStatus;
@@ -42,6 +40,7 @@ public final class Coins extends JavaPlugin {
             Coins.getMySQLConnector().createTable();
             accountManager = new AccountManager(mySQLConnector.getConnection());
             accountManager.loadAllAccounts();
+
             if (mySQLConnector.getConnection().isValid(1)) {
                 log.sendMessage(ColorUtils.getColored("&a&lCONNECTED TO DATABASE"));
                 MysqlStatus = "&a&lCONNECTED TO DATABASE";
@@ -56,7 +55,6 @@ public final class Coins extends JavaPlugin {
         RegisterListener.registerListeners(this);
         CommandManager.initialise(this);
         reload();
-        GuiManager.initialise();
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new SaveCoins(), 12000, 12000);
     }
 
@@ -100,6 +98,7 @@ public final class Coins extends JavaPlugin {
     }
 
     public void reload() {
+        GuiManager.initialise();
         initialiseConfigs();
     }
 

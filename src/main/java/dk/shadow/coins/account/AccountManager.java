@@ -60,6 +60,8 @@ public class AccountManager {
         String selectSql = "SELECT player_uuid, player_coins FROM users";
         try (Statement statement = connection.createStatement()) {
             ResultSet result = statement.executeQuery(selectSql);
+            System.out.println("result -" + result);
+
 
             if (!result.isBeforeFirst()) {
                 System.out.println("Result set is empty");
@@ -68,6 +70,8 @@ public class AccountManager {
             while (result.next()) {
                 UUID uuid = UUID.fromString(result.getString("player_uuid"));
                 double coins = result.getLong("player_coins");
+                System.out.println("uuid -" + uuid);
+                System.out.println("coins -" + coins);
                 this.addCoins(uuid, coins);
             }
         }

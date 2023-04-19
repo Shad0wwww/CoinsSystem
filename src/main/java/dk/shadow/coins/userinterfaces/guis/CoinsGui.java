@@ -7,6 +7,7 @@ import dev.triumphteam.gui.guis.PaginatedGui;
 import dk.shadow.coins.Coins;
 import dk.shadow.coins.account.Account;
 import dk.shadow.coins.configuration.Messages;
+import dk.shadow.coins.userinterfaces.GuiManager;
 import dk.shadow.coins.userinterfaces.SubGui;
 import dk.shadow.coins.utils.ColorUtils;
 import dk.shadow.coins.utils.GUI;
@@ -15,6 +16,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -27,6 +29,7 @@ import java.util.*;
 public class CoinsGui implements SubGui {
 
     public void open(Player player) {
+        System.out.println("2 - " + player);
         UUID uuid = player.getUniqueId();
 
         int rows = Integer.parseInt(Messages.get("gui.rows")[0]);
@@ -53,17 +56,25 @@ public class CoinsGui implements SubGui {
 
 
         int n = 8;
+        System.out.println("3 - ");
         for (Map.Entry<UUID, Account> entry : Coins.getAccountManager().getBalances().entrySet()) {
+            System.out.println("entry.getKey() - " + entry.getKey());
+            System.out.println("entry.getValue() - " + entry.getValue().getAmount());
+
             UUID p_uuid = entry.getKey();
             NumberFormat formatter = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.GERMANY));
             String string_amount = formatter.format(entry.getValue().getAmount());
+
+            System.out.println("66 - ");
             OfflinePlayer p = Bukkit.getOfflinePlayer(p_uuid);
             String playerName = p.getName();
+            System.out.println("70 - " + playerName);
 
             String title_head = Messages.get("gui.spiller_head_name", "%player%", playerName)[0];
+            System.out.println("73 - " + title_head);
             String[] lore = Messages.get("gui.spiller_lore", "%balance%", string_amount, "%player%", playerName);
 
-
+            System.out.println("72 - ");
             ItemStack head = GUI.getPlayerSkull(playerName);
 
             GuiItem player_heads = ItemBuilder.from(head).name(Component.text(ColorUtils.getColored(title_head))).setLore(ColorUtils.getColored(lore)).asGuiItem(event -> {
@@ -78,23 +89,25 @@ public class CoinsGui implements SubGui {
                     // Check if the skull has an owner
                     if (skullMeta.hasOwner()) {
                         String owner = skullMeta.getOwner();
-                        // Do something with the owner's name
+                        // Do something with the owner's nam
                         Bukkit.broadcastMessage(owner);
-
+                        player.playSound(player.getLocation(), Sound.NOTE_PLING, 0.5F, 0.5F);
+                        GuiManager.openMenu(player, Bukkit.getPlayer(owner), "admin");
 
                     }
                 }
 
 
             });
+            System.out.println("07 - ");
             n++;
             gui.setItem(n, player_heads);
 
         }
-
+        System.out.println("4 - ");
 
         GuiItem arrow_left_gui = ItemBuilder.from(arrow_left)
-                .name(Component.text(ColorUtils.getColored("&f&lNæste Side")))
+                .name(Component.text(ColorUtils.getColored("&f&lForrige Side")))
                 .setLore(ColorUtils.getColored("&7" + gui.getNextPageNum()))
 
                 .asGuiItem(event -> {
@@ -107,7 +120,7 @@ public class CoinsGui implements SubGui {
                 .asGuiItem();
 
         GuiItem arrow_right_gui = ItemBuilder.from(arrow_right)
-                .name(Component.text(ColorUtils.getColored("&f&lForrige Side")))
+                .name(Component.text(ColorUtils.getColored("&f&lNæste Side")))
                 .setLore(ColorUtils.getColored("&7" + gui.getPrevPageNum()))
                 .asGuiItem(event -> {
                     gui.previous();
@@ -122,6 +135,11 @@ public class CoinsGui implements SubGui {
         gui.setItem(50, arrow_right_gui);
 
         gui.open(player);
+
+    }
+
+    @Override
+    public void open(Player paramPlayer, Player palyer2) {
 
     }
 }

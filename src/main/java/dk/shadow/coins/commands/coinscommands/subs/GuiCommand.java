@@ -9,13 +9,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class GuiCommand extends ISubCommand {
-
-
     public GuiCommand() {
         super("gui");
     }
-
-
 
     @Override
     public void onCommand(CommandSender sender, String[] args, String paramString) {
@@ -23,6 +19,7 @@ public class GuiCommand extends ISubCommand {
             Messages.send(sender, "messages.reload_no_permissions");
             return;
         }
+        System.out.println("1");
         GuiManager.openMenu((Player) sender, "coins");
     }
 }
