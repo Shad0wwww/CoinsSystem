@@ -9,17 +9,15 @@ import org.bukkit.entity.Player;
 
 public class CoinsAdmin implements SubGui {
 
-    public void open(Player paramPlayer) {
-        Bukkit.broadcastMessage("paramPlayer - "  + paramPlayer);
-    }
 
-    public void open(Player paramPlayer, Player palyer2) {
+
+
+    public void open(Player paramPlayer) {
         Bukkit.broadcastMessage("paramPlayer2 - "  + paramPlayer);
-        Bukkit.broadcastMessage("palyer2 - "  + palyer2);
 
 
         int rows = Integer.parseInt(Messages.get("admin-gui.rows")[0]);
-        String title = Messages.get("admin-gui.title", "%player%", palyer2.getDisplayName())[0];
+        String title = Messages.get("admin-gui.title", "%player%", paramPlayer.getDisplayName())[0];
 
         Gui admin_gui = Gui.gui()
                 .title(Component.text(title))
@@ -31,4 +29,5 @@ public class CoinsAdmin implements SubGui {
 
         admin_gui.open(paramPlayer);
     }
+
 }

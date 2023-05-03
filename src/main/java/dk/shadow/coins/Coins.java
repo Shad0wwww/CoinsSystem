@@ -35,7 +35,7 @@ public final class Coins extends JavaPlugin {
         instance = this;
         log = Bukkit.getConsoleSender();
         try {
-            mySQLConnector = new MySQLConnector(this, "62.243.56.2", 56624, "coins", "root", "cz8MjtOK" );
+
             mySQLConnector.deleteTable(false);
             Coins.getMySQLConnector().createTable();
             accountManager = new AccountManager(mySQLConnector.getConnection());

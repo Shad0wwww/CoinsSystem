@@ -50,7 +50,7 @@ public class Messages {
             List<String> messageList = new ArrayList<>();
             for (String message : messages) {
                 for (int i = 0; i < replacements.length; i += 2)
-                    message = message.replaceAll(replacements[i], ColorUtils.getColored(replacements[i + 1]));
+                    message = message.replaceAll(replacements[i], replacements[i + 1]);
                 messageList.add(message);
             }
             return messageList.<String>toArray(new String[0]);

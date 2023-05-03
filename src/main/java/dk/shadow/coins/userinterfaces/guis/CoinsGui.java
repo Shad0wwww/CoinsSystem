@@ -92,7 +92,7 @@ public class CoinsGui implements SubGui {
                         // Do something with the owner's nam
                         Bukkit.broadcastMessage(owner);
                         player.playSound(player.getLocation(), Sound.NOTE_PLING, 0.5F, 0.5F);
-                        GuiManager.openMenu(player, Bukkit.getPlayer(owner), "admin");
+                        GuiManager.openMenu(player, "admin");
 
                     }
                 }
@@ -138,8 +138,5 @@ public class CoinsGui implements SubGui {
 
     }
 
-    @Override
-    public void open(Player paramPlayer, Player palyer2) {
 
-    }
 }

@@ -5,6 +5,7 @@ import dk.shadow.coins.commands.ISubCommand;
 
 import dk.shadow.coins.configuration.Messages;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -22,9 +23,10 @@ public class BalCommand extends ISubCommand {
     public void onCommand(CommandSender sender, String[] args, String paramString) {
 
         if(args.length == 1) {
-            Player arg_0 = Bukkit.getPlayer(args[0]);
-            UUID uuid1 = arg_0.getUniqueId();
-            Messages.send(sender, "messages.coins_balance_en_anden", "%prefix%", String.valueOf(Messages.get("prefix")), "%amount%", String.valueOf(Coins.getAccountManager().getBalance(uuid1).getAmount()), "%player%", arg_0.getDisplayName());
+
+            OfflinePlayer arg_0 = Bukkit.getOfflinePlayer(args[0]);
+            UUID uuid1 = Bukkit.getOfflinePlayer(args[0]).getUniqueId();
+            Messages.send(sender, "messages.coins_balance_en_anden", "%prefix%", String.valueOf(Messages.get("prefix")), "%amount%", String.valueOf(Coins.getAccountManager().getBalance(uuid1).getAmount()), "%player%", arg_0.getName());
             return;
         }
 

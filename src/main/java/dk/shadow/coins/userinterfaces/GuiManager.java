@@ -16,7 +16,7 @@ public class GuiManager {
 
     public static void openMenu(Player player, Player player2, String name) {
         if (guis.containsKey(name))
-            ((SubGui)guis.get(name)).open(player);
+            guis.get(name).open(player);
     }
 
     public static void addGui(String name, SubGui gui) {
