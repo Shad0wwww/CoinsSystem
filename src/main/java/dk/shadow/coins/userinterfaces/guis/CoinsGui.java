@@ -7,6 +7,7 @@ import dev.triumphteam.gui.guis.PaginatedGui;
 import dk.shadow.coins.Coins;
 import dk.shadow.coins.account.Account;
 import dk.shadow.coins.configuration.Messages;
+import dk.shadow.coins.database.SQLITEConnector;
 import dk.shadow.coins.userinterfaces.GuiManager;
 import dk.shadow.coins.userinterfaces.SubGui;
 import dk.shadow.coins.utils.ColorUtils;
@@ -57,7 +58,7 @@ public class CoinsGui implements SubGui {
 
         int n = 8;
         System.out.println("3 - ");
-        for (Map.Entry<UUID, Account> entry : Coins.getAccountManager().getBalances().entrySet()) {
+        for (Map.Entry<UUID, Account> entry : SQLITEConnector.getAccountManager().getBalances().entrySet()) {
             System.out.println("entry.getKey() - " + entry.getKey());
             System.out.println("entry.getValue() - " + entry.getValue().getAmount());
 

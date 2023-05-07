@@ -4,6 +4,7 @@ import dk.shadow.coins.Coins;
 import dk.shadow.coins.commands.ISubCommand;
 
 import dk.shadow.coins.configuration.Messages;
+import dk.shadow.coins.database.SQLITEConnector;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -26,13 +27,13 @@ public class BalCommand extends ISubCommand {
 
             OfflinePlayer arg_0 = Bukkit.getOfflinePlayer(args[0]);
             UUID uuid1 = Bukkit.getOfflinePlayer(args[0]).getUniqueId();
-            Messages.send(sender, "messages.coins_balance_en_anden", "%prefix%", String.valueOf(Messages.get("prefix")), "%amount%", String.valueOf(Coins.getAccountManager().getBalance(uuid1).getAmount()), "%player%", arg_0.getName());
+            Messages.send(sender, "messages.coins_balance_en_anden", "%prefix%", String.valueOf(Messages.get("prefix")), "%amount%", String.valueOf(SQLITEConnector.getAccountManager().getBalance(uuid1).getAmount()), "%player%", arg_0.getName());
             return;
         }
 
         Player player = (Player) sender;
         UUID uuid = player.getUniqueId();
-        Messages.send(sender, "messages.coins_balance_dig_selv", "%prefix%", String.valueOf(Messages.get("prefix")), "%amount%", String.valueOf(Coins.getAccountManager().getBalance(uuid).getAmount()));
+        Messages.send(sender, "messages.coins_balance_dig_selv", "%prefix%", String.valueOf(Messages.get("prefix")), "%amount%", String.valueOf(SQLITEConnector.getAccountManager().getBalance(uuid).getAmount()));
 
 
 

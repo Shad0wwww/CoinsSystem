@@ -3,6 +3,7 @@ package dk.shadow.coins.commands.coinscommands.subs;
 import dk.shadow.coins.Coins;
 import dk.shadow.coins.commands.ISubCommand;
 import dk.shadow.coins.configuration.Messages;
+import dk.shadow.coins.database.SQLITEConnector;
 import dk.shadow.coins.events.CoinsAddEvent;
 import dk.shadow.coins.utils.ColorUtils;
 import dk.shadow.coins.utils.IntUtil;
@@ -45,7 +46,7 @@ public class AddCommand extends ISubCommand {
 
             Messages.send(sender, "messages.coins_add_en_anden", "%amount%", String.valueOf(amount), "%player%", arg_0_player.getDisplayName());
             Messages.send(arg_0_player, "coins_add_modtog", "%amount%", String.valueOf(amount));
-            Coins.getAccountManager().addCoins(arg_0, amount);
+            SQLITEConnector.getAccountManager().addCoins(arg_0, amount);
 
             CoinsAddEvent coinsAddEvent = new CoinsAddEvent(arg_0_player, amount);
             coinsAddEvent.call();

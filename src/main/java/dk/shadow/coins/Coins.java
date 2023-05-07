@@ -4,6 +4,7 @@ import dk.shadow.coins.account.AccountManager;
 import dk.shadow.coins.commands.CommandManager;
 import dk.shadow.coins.configuration.Messages;
 import dk.shadow.coins.database.MySQLConnector;
+import dk.shadow.coins.database.SQLITEConnector;
 import dk.shadow.coins.listener.RegisterListener;
 import dk.shadow.coins.task.SaveCoins;
 import dk.shadow.coins.userinterfaces.GuiManager;
@@ -22,8 +23,9 @@ import java.sql.SQLException;
 public final class Coins extends JavaPlugin {
     private static Coins instance;
     private static MySQLConnector mySQLConnector;
+    private static SQLITEConnector sqliteConnector;
     private static ConsoleCommandSender log;
-    private static AccountManager accountManager;
+
     public static String MysqlStatus;
     public static String websocketHandlerStatus;
     public WebsocketHandler websocketHandler;
@@ -34,23 +36,9 @@ public final class Coins extends JavaPlugin {
     public void onEnable() {
         instance = this;
         log = Bukkit.getConsoleSender();
-        try {
+        sqliteConnector = new SQLITEConnector(this);
+        sqliteConnector.connect();
 
-            mySQLConnector.deleteTable(false);
-            Coins.getMySQLConnector().createTable();
-            accountManager = new AccountManager(mySQLConnector.getConnection());
-            accountManager.loadAllAccounts();
-
-            if (mySQLConnector.getConnection().isValid(1)) {
-                log.sendMessage(ColorUtils.getColored("&a&lCONNECTED TO DATABASE"));
-                MysqlStatus = "&a&lCONNECTED TO DATABASE";
-            } else {
-                log.sendMessage(ColorUtils.getColored("&c&lFAILED TO CONNECT TO DATABASE"));
-                MysqlStatus = "&c&lFAILED TO CONNECT TO DATABASE";
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
         RegisterListener.registerListeners(this);
         CommandManager.initialise(this);
@@ -61,14 +49,8 @@ public final class Coins extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        try {
-            accountManager.saveAllAccounts();
-            mySQLConnector.getConnection().close();
+        sqliteConnector.closeConnection();
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        websocketHandler.close();
     }
 
     public static Coins getInstance() {
@@ -77,6 +59,10 @@ public final class Coins extends JavaPlugin {
 
     public static MySQLConnector getMySQLConnector() {
         return mySQLConnector;
+    }
+
+    public static SQLITEConnector getSQLITEConnector() {
+        return sqliteConnector;
     }
 
     public void connectSocket() {
@@ -111,8 +97,6 @@ public final class Coins extends JavaPlugin {
         Messages.initialise(this);
     }
 
-    public static AccountManager getAccountManager() {
-        return accountManager;
-    }
+
 
 }

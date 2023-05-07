@@ -3,6 +3,7 @@ package dk.shadow.coins.commands.coinscommands.subs;
 import dk.shadow.coins.Coins;
 import dk.shadow.coins.commands.ISubCommand;
 import dk.shadow.coins.configuration.Messages;
+import dk.shadow.coins.database.SQLITEConnector;
 import dk.shadow.coins.utils.ColorUtils;
 import dk.shadow.coins.utils.IntUtil;
 import org.bukkit.Bukkit;
@@ -42,7 +43,7 @@ public class SetCommand extends ISubCommand {
             }
 
             Messages.send(sender, "messages.coins_set", "%amount%", String.valueOf(amount), "%player%", arg_0_player.getDisplayName());
-            Coins.getAccountManager().setCoins(arg_0, amount);
+            SQLITEConnector.getAccountManager().setCoins(arg_0, amount);
 
 
         } else {
