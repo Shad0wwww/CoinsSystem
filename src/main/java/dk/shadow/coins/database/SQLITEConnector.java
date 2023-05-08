@@ -32,10 +32,6 @@ public class SQLITEConnector {
         }
     }
 
-    public boolean isInitialized() {
-        return true;
-    }
-
     public void closeConnection() {
         try {
             if (this.connection != null) {

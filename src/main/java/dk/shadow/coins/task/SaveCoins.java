@@ -8,8 +8,6 @@ import java.sql.SQLException;
 public class SaveCoins implements Runnable {
     @Override
     public void run() {
-
-
         try {
             SQLITEConnector.getAccountManager().saveAllAccounts();
         } catch (SQLException e) {

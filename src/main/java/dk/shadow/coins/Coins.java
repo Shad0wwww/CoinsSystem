@@ -1,6 +1,7 @@
 package dk.shadow.coins;
 
 import dk.shadow.coins.account.AccountManager;
+import dk.shadow.coins.backup.CopyBackup;
 import dk.shadow.coins.commands.CommandManager;
 import dk.shadow.coins.configuration.Messages;
 import dk.shadow.coins.database.MySQLConnector;
@@ -50,20 +51,12 @@ public final class Coins extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
         sqliteConnector.closeConnection();
+        CopyBackup copy = new CopyBackup();
+        File coinsFile = new File(Coins.getInstance().getDataFolder(), "coins.db");
+        copy.createBackup(coinsFile);
 
     }
 
-    public static Coins getInstance() {
-        return instance;
-    }
-
-    public static MySQLConnector getMySQLConnector() {
-        return mySQLConnector;
-    }
-
-    public static SQLITEConnector getSQLITEConnector() {
-        return sqliteConnector;
-    }
 
     public void connectSocket() {
         try {
@@ -86,6 +79,9 @@ public final class Coins extends JavaPlugin {
     public void reload() {
         GuiManager.initialise();
         initialiseConfigs();
+        CopyBackup copy = new CopyBackup();
+        File coinsFile = new File(Coins.getInstance().getDataFolder(), "coins.db");
+        copy.createBackup(coinsFile);
     }
 
     private void initialiseConfigs() {
@@ -97,6 +93,18 @@ public final class Coins extends JavaPlugin {
         Messages.initialise(this);
     }
 
+
+    public static ConsoleCommandSender getLog() {
+        return log;
+    }
+    public static Coins getInstance() {
+        return instance;
+    }
+
+
+    public static SQLITEConnector getSQLITEConnector() {
+        return sqliteConnector;
+    }
 
 
 }

@@ -1,6 +1,7 @@
 package dk.shadow.coins.userinterfaces.guis;
 
 import dev.triumphteam.gui.builder.item.ItemBuilder;
+import dev.triumphteam.gui.components.GuiType;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import dev.triumphteam.gui.guis.PaginatedGui;
@@ -59,23 +60,17 @@ public class CoinsGui implements SubGui {
         int n = 8;
         System.out.println("3 - ");
         for (Map.Entry<UUID, Account> entry : SQLITEConnector.getAccountManager().getBalances().entrySet()) {
-            System.out.println("entry.getKey() - " + entry.getKey());
-            System.out.println("entry.getValue() - " + entry.getValue().getAmount());
 
             UUID p_uuid = entry.getKey();
             NumberFormat formatter = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.GERMANY));
             String string_amount = formatter.format(entry.getValue().getAmount());
 
-            System.out.println("66 - ");
             OfflinePlayer p = Bukkit.getOfflinePlayer(p_uuid);
             String playerName = p.getName();
-            System.out.println("70 - " + playerName);
 
             String title_head = Messages.get("gui.spiller_head_name", "%player%", playerName)[0];
-            System.out.println("73 - " + title_head);
             String[] lore = Messages.get("gui.spiller_lore", "%balance%", string_amount, "%player%", playerName);
 
-            System.out.println("72 - ");
             ItemStack head = GUI.getPlayerSkull(playerName);
 
             GuiItem player_heads = ItemBuilder.from(head).name(Component.text(ColorUtils.getColored(title_head))).setLore(ColorUtils.getColored(lore)).asGuiItem(event -> {
@@ -93,7 +88,7 @@ public class CoinsGui implements SubGui {
                         // Do something with the owner's nam
                         Bukkit.broadcastMessage(owner);
                         player.playSound(player.getLocation(), Sound.NOTE_PLING, 0.5F, 0.5F);
-                        GuiManager.openMenu(player, "admin");
+                        open(player, Bukkit.getOfflinePlayer(owner));
 
                     }
                 }
@@ -137,6 +132,23 @@ public class CoinsGui implements SubGui {
 
         gui.open(player);
 
+    }
+
+
+    public void open(Player you, OfflinePlayer player) {
+        Bukkit.broadcastMessage("paramPlayer2 - "  + you);
+
+        String title = Messages.get("admin-gui.title", "%player%", player.getName())[0];
+
+        Gui admin_gui = Gui.gui()
+                .title(Component.text(title))
+                .type(GuiType.HOPPER)
+                .disableAllInteractions()
+                .create();
+
+
+
+        admin_gui.open(you);
     }
 
 
