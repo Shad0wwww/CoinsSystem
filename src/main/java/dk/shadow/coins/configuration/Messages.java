@@ -29,10 +29,10 @@ public class Messages {
                 messages.put(key, stringList.toArray(new String[0]));
             }
         }
-        if (messages.containsKey("prefix"))
+        if (messages.containsKey("coin-prefix"))
             for (Map.Entry<String, String[]> entry : messages.entrySet()) {
                 for (int i = 0; i < entry.getValue().length; i++)
-                    entry.getValue()[i] = ((String[])entry.getValue())[i].replaceAll("%prefix%", ((String[])messages.get("prefix"))[0]);
+                    entry.getValue()[i] = ((String[])entry.getValue())[i].replaceAll("%coin-prefix%", ((String[])messages.get("coin-prefix"))[0]);
             }
 
     }

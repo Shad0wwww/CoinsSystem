@@ -3,45 +3,35 @@ package dk.shadow.coins.account;
 
 
 import java.sql.*;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
 
 public class AccountManager {
     private Connection connection;
-    private TreeMap<UUID, Account> accounts = new TreeMap<>();
+    private HashMap<UUID, Account> accounts = new HashMap<>();
+
     public AccountManager(Connection connection) {
         this.connection = connection;
     }
 
-    public void addCoins(UUID uuid, double amount){
-        if (this.accounts.containsKey(uuid)) {
-            Account account = this.accounts.get(uuid);
-            account.addAmount(amount);
-        } else {
-            Account newAccount = new Account(uuid, amount);
-            this.accounts.put(uuid, newAccount);
-        }
+    public void addCoins(UUID uuid, double amount) {
+        Account account = this.accounts.getOrDefault(uuid, new Account(uuid, 0));
+        account.addAmount(amount);
+        this.accounts.put(uuid, account);
     }
 
-    public void removeCoins(UUID uuid, double amount){
-        if (this.accounts.containsKey(uuid)) {
-            Account account = this.accounts.get(uuid);
-            account.removeAmount(amount);
-        } else {
-            Account newAccount = new Account(uuid, amount);
-            this.accounts.put(uuid, newAccount);
-        }
+    public void removeCoins(UUID uuid, double amount) {
+        Account account = this.accounts.getOrDefault(uuid, new Account(uuid, 0));
+        account.removeAmount(amount);
+        this.accounts.put(uuid, account);
     }
 
     public void setCoins(UUID uuid, double amount) {
-        if (this.accounts.containsKey(uuid)) {
-            Account account = this.accounts.get(uuid);
-            account.setAmount(amount);
-        } else {
-            Account newAccount = new Account(uuid, amount);
-            this.accounts.put(uuid, newAccount);
-        }
+        Account account = this.accounts.getOrDefault(uuid, new Account(uuid, 0));
+        account.setAmount(amount);
+        this.accounts.put(uuid, account);
     }
 
     public void payCoins(UUID uuid, double amount, UUID uuid2, double amount2){

@@ -1,21 +1,21 @@
-prefix: "&8&l[ &e&LCOINS &8&l]"
+coin-prefix: "&8&l[ &e&LCOINS &8&l]"
 
 messages:
-    reload_no_permissions: "%prefix% &fDu har ikke adgang."
-    reload_starting: "%prefix% &aReload er begyndt"
-    reload_error: "%prefix% &cDer opstod en fejl"
-    reload_succes: "%prefix% &asuccelsful reloaded"
-    only_player_command: "%prefix% &fDet er kun spillere der kan bruge commanden."
+    reload_no_permissions: "%coin-prefix% &fDu har ikke adgang."
+    reload_starting: "%coin-prefix% &aReload er begyndt"
+    reload_error: "%coin-prefix% &cDer opstod en fejl"
+    reload_succes: "%coin-prefix% &asuccelsful reloaded"
+    only_player_command: "%coin-prefix% &fDet er kun spillere der kan bruge commanden."
 
     #BALANCE
     #%amount% er hvor mange coins du har
     #%player% er spilleren
 
     coins_balance_dig_selv:
-        - "%prefix%"
+        - "%coin-prefix%"
         - "&8▍ &fDu har &a%amount% &ecoins&f."
     coins_balance_en_anden:
-        - "%prefix%"
+        - "%coin-prefix%"
         - "&8▍ &c%player% &fhar &a%amount% &ecoins&f."
 
 
@@ -24,21 +24,21 @@ messages:
     #%player% Spilleren du sendte det til
 
     coins_add_en_anden:
-        - "%prefix%"
+        - "%coin-prefix%"
         - "&8▍ &fDu sendte &a%amount% &ecoins&f til &c%player%"
     coins_add_modtog:
-        - "%prefix%"
+        - "%coin-prefix%"
         - "&8▍ &fDu modtog &a%amount% &ecoins&f."
 
     coins_remove_en_anden:
-        - "%prefix%"
+        - "%coin-prefix%"
         - "&8▍ &fDu fjernede &a%amount% &ecoins&f fra &c%player%"
     coins_remove:
-        - "%prefix%"
+        - "%coin-prefix%"
         - "&8▍ &fDu fik fjernet &a%amount% &ecoins&f."
 
     coins_set:
-        - "%prefix%"
+        - "%coin-prefix%"
         - "&8▍ &fDu satte &c%player% &ecoins&f til &a%amount%&f."
 
 gui:
@@ -52,7 +52,7 @@ gui:
     spiller_head_name: "&c&l%player%"
     spiller_lore:
         - "&7"
-        - "%prefix%"
+        - "%coin-prefix%"
         - "&7"
         - "&8▍ &fSpillers bal er på %balance%"
         - "&7"
