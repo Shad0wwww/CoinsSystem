@@ -31,7 +31,6 @@ import java.util.*;
 public class CoinsGui implements SubGui {
 
     public void open(Player player) {
-        System.out.println("2 - " + player);
         UUID uuid = player.getUniqueId();
 
         int rows = Integer.parseInt(Messages.get("gui.rows")[0]);
@@ -58,7 +57,6 @@ public class CoinsGui implements SubGui {
 
 
         int n = 8;
-        System.out.println("3 - ");
         for (Map.Entry<UUID, Account> entry : SQLITEConnector.getAccountManager().getBalances().entrySet()) {
 
             UUID p_uuid = entry.getKey();
@@ -95,12 +93,10 @@ public class CoinsGui implements SubGui {
 
 
             });
-            System.out.println("07 - ");
             n++;
             gui.setItem(n, player_heads);
 
         }
-        System.out.println("4 - ");
 
         GuiItem arrow_left_gui = ItemBuilder.from(arrow_left)
                 .name(Component.text(ColorUtils.getColored("&f&lForrige Side")))
@@ -136,7 +132,7 @@ public class CoinsGui implements SubGui {
 
 
     public void open(Player you, OfflinePlayer player) {
-        Bukkit.broadcastMessage("paramPlayer2 - "  + you);
+        ItemStack tilbage = GUI.getSkull(Messages.get("admin-gui.tilbage-head")[0]);
 
         String title = Messages.get("admin-gui.title", "%player%", player.getName())[0];
 
@@ -146,8 +142,16 @@ public class CoinsGui implements SubGui {
                 .disableAllInteractions()
                 .create();
 
+        GuiItem arrow_left_gui = ItemBuilder.from(tilbage)
+                .name(Component.text(ColorUtils.getColored("&c&lTILBAGE")))
+                .setLore(ColorUtils.getColored("&7 tilbage")).asGuiItem(event -> {
+                    you.playSound(you.getLocation(), Sound.NOTE_BASS, 1, 5);
+                    open(you);
+                });
 
 
+
+        admin_gui.setItem(0, arrow_left_gui);
         admin_gui.open(you);
     }
 

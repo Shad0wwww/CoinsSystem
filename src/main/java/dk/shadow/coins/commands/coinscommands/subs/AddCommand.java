@@ -48,7 +48,8 @@ public class AddCommand extends ISubCommand {
             Messages.send(arg_0_player, "coins_add_modtog", "%amount%", String.valueOf(amount));
             SQLITEConnector.getAccountManager().addCoins(arg_0, amount);
 
-            CoinsAddEvent coinsAddEvent = new CoinsAddEvent(arg_0_player, amount);
+            //CALLING MY CUSTOM EVENT
+            CoinsAddEvent coinsAddEvent = new CoinsAddEvent((Player) sender, amount, arg_0_player);
             coinsAddEvent.call();
 
         } else {

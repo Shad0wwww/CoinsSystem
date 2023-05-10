@@ -25,13 +25,11 @@ public class CoinsCommands extends ICommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        System.out.println("argssss3 " + args.length);
         if (args.length <= 0 && getDefaultCommand() != null) {
             execute(sender, getDefaultCommand(), args);
         } else if (args.length > 0) {
             ISubCommand subCommand = findSubCommand(args[0]);
             if (subCommand != null) {
-                System.out.println("argssss " + args.length);
                 execute(sender, subCommand, args);
             }
             return true;

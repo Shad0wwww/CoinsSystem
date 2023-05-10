@@ -10,6 +10,6 @@ public class CoinsAdd implements Listener {
 
     @EventHandler
     public void onCoinsAddEvent(CoinsAddEvent event) {
-        Bukkit.broadcastMessage(event.getPlayer().getDisplayName() + " " + event.getAmount().toString());
+        Bukkit.broadcastMessage(event.getSender().getDisplayName() + " har sendt " + event.getAmount().toString() + " til " + event.getReciver().getName());
     }
 }

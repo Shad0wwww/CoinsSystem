@@ -59,3 +59,6 @@ gui:
 
 admin-gui:
     title: "&8&l[ &e&lCOINS &8&l] &7- &c&l%player%"
+    tilbage-head: "http://textures.minecraft.net/texture/f84f597131bbe25dc058af888cb29831f79599bc67c95c802925ce4afba332fc"
+
+
