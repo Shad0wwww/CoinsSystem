@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class SQLITEConnector {
     private final Plugin plugin;
-    private static AccountManager accountManager;
+    public static AccountManager accountManager;
 
     private final String connectionString;
 
