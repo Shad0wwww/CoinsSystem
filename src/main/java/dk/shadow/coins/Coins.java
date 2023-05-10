@@ -32,6 +32,7 @@ public final class Coins extends JavaPlugin {
     public WebsocketHandler websocketHandler;
 
     public static String websocketURL = "ws://83.92.176.64:8080";
+    private static AccountManager accountManager;
 
     @Override
     public void onEnable() {
@@ -105,6 +106,8 @@ public final class Coins extends JavaPlugin {
     public static SQLITEConnector getSQLITEConnector() {
         return sqliteConnector;
     }
-
+    public static AccountManager accountManager() {
+        return accountManager;
+    }
 
 }
