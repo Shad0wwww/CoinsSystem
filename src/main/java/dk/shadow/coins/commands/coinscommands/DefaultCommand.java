@@ -21,7 +21,7 @@ public class DefaultCommand extends ISubCommand {
             Messages.send(sender,"messages.only_player_command");
         } else {
             Player player = (Player) sender;
-            player.sendMessage(Messages.get("prefix"));
+            player.sendMessage(Messages.get("coin-prefix"));
             player.sendMessage(ColorUtils.getColored("\n"));
             player.sendMessage(ColorUtils.getColored("&8▌ &7/coins bal"));
             player.sendMessage(ColorUtils.getColored("&8▌ &7/coins pay <spiller> <antal>"));
@@ -32,6 +32,7 @@ public class DefaultCommand extends ISubCommand {
                 player.sendMessage(ColorUtils.getColored("&8▌ &7/coins remove <spiller> <antal>"));
                 player.sendMessage(ColorUtils.getColored("&8▌ &7/coins set <spiller> <antal>"));
                 player.sendMessage(ColorUtils.getColored("&8▌ &7/coins gui"));
+                player.sendMessage(ColorUtils.getColored("&8▌ &7/coins buycraft add <antal>"));
             }
         }
 
